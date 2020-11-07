@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="war" build-on-make="true" name="Exp2">
+    <output-path>$PROJECT_DIR$/out/artifacts/Exp2</output-path>
+    <root id="archive" name="Exp2.war">
+      <element id="artifact" artifact-name="Exp2:war exploded" />
+      <element id="dir-copy" path="$PROJECT_DIR$/web" />
+    </root>
+  </artifact>
+</component>

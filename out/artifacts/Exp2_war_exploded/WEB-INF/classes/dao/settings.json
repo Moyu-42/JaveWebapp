@@ -1,0 +1,7 @@
+{
+    "IPAddress" : "49.234.84.130",
+    "DatabaseName": "course",
+    "PORT" : "3306",
+    "USER" : "root",
+    "PASSWORD" : "352641"
+}
