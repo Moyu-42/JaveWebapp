@@ -20,4 +20,5 @@ public class UserService {
     public List<User> getQuery() {
         return u.query();
     }
+    public boolean search(User user) { return u.search(user); }
 }

@@ -25,10 +25,10 @@ public class UserOpt {
 
     public int insert(User user) {
         String sql = "select * from users where Username = ?";
-        List<Map<String, Object>> pList = new ArrayList<Map<String, Object>>();
-        pList = db.query(sql, user.getUsername());
+        List<Map<String, Object>> uList = new ArrayList<Map<String, Object>>();
+        uList = db.query(sql, user.getUsername());
         db.getLog(4);
-        if (pList.isEmpty()) {
+        if (uList.isEmpty()) {
             sql = "insert into users(Username, Password) values(?, ?)";
             Object[] obj = { user.getUsername(), user.getPassword() };
             db.update(sql, obj);
@@ -60,5 +60,16 @@ public class UserOpt {
         }
         db.getLog(4);
         return ans;
+    }
+
+    public boolean search(User user) {
+        String sql = "select * from users where Username = ?";
+        List<Map<String, Object>> uList = new ArrayList<>();
+        uList = db.query(sql, user.getUsername());
+        db.getLog(4);
+        if (uList.isEmpty()) {
+            return false;
+        }
+        else return true;
     }
 }

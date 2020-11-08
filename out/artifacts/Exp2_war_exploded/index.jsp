@@ -97,6 +97,24 @@
       </form>
   </div>
 
+  <div class="container">
+      <center> <h4>从users表删除数据</h4></center>
+      <br>
+      <form class="form-horizontal" role="form" id="form-users-del">
+          <div class="form-group">
+              <label for="username_user" class="col-sm-1 control-label">Username</label>
+              <div class="col-sm-10">
+                  <input type="text" class="form-control" id="username_user_del"
+                         name="username_user_del" placeholder="Please input username">
+              </div>
+          </div>
+          <div class="form-group">
+              <div class="col-sm-offset-1 col-sm-10">
+                  <button type="submit" class="btn btn-default" id="btn-users-del" name="btn-users-del">Submit</button>
+              </div>
+          </div>
+      </form>
+  </div>
 
   </body>
 

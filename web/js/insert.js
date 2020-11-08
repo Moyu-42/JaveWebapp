@@ -3,7 +3,6 @@ $(function check() {
         live: 'enabled',//验证时机，enabled是内容有变化就验证（默认），disabled和submitted是提交再验证
         excluded: [':disabled', ':hidden', ':not(:visible)'],//排除无需验证的控件，比如被禁用的或者被隐藏的
         submitButtons: $('#btn-users'),
-        message: '通用的验证失败消息',//好像从来没出现过
         feedbackIcons: {//根据验证结果显示的各种图标
             valid: 'glyphicon glyphicon-ok',
             invalid: 'glyphicon glyphicon-remove',
@@ -94,6 +93,41 @@ $(function check() {
                         min: 11,
                         max: 11,
                         message: '长度必须为11位'
+                    }
+                }
+            }
+        }
+    });
+    jQuery("#form-users-del").bootstrapValidator({
+        live: 'enabled',//验证时机，enabled是内容有变化就验证（默认），disabled和submitted是提交再验证
+        excluded: [':disabled', ':hidden', ':not(:visible)'],//排除无需验证的控件，比如被禁用的或者被隐藏的
+        submitButtons: $('#btn-users-del'),
+        feedbackIcons: {//根据验证结果显示的各种图标
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            username_user_del: {
+                validators: {
+                    notEmpty: {
+                        message: '请输入用户名'
+                    },
+                    stringLength: {
+                        min: 0,
+                        max: 10,
+                        message: '长度必须在10之内'
+                    },
+                    remote: {
+                        url: 'deleteUserServlet',
+                        type: "post",
+                        message: "该Username不存在",
+                        delay: 1000,
+                        data: {
+                            types: "search",
+                            username: $("input[name=username_user_del]").val()
+                        },
+                        dataType: "json"
                     }
                 }
             }

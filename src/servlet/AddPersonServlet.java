@@ -26,18 +26,34 @@ public class AddPersonServlet extends HttpServlet{
             Person person = new Person();
             person.setUsername(request.getParameter("username"));
             person.setName(request.getParameter("name"));
-            person.setAge(Integer.parseInt(request.getParameter("age")));
+            String age = request.getParameter("age");
+            Integer age_;
+            if (age.isEmpty()) {
+                age_ = null;
+            }
+            else age_ = Integer.parseInt(age);
+            person.setAge(age_);
             person.setTeleno(request.getParameter("teleno"));
 
-            int row = personService.addPerson(person);
-            if (row > 0) {
+            int ret = personService.addPerson(person);
+            if (ret > 0) {
                 message = "Success insert person";
             }else {
                 message = "Error!";
             }
             obean.put("message", message);
-            response.getWriter().write(obean.toString());
         }
+        if ("search".equals(type)) {
+            Person person = new Person();
+            person.setUsername(request.getParameter("username"));
+
+            Boolean flag = personService.search(person);
+            if (flag) {
+                obean.put("message", "true");
+            }
+            else obean.put("message", "false");
+        }
+        response.getWriter().write(obean.toString());
     }
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         this.doPost(request, response);

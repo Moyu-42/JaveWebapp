@@ -10,10 +10,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-
-@WebServlet(name = "addUserServlet", urlPatterns = {"/addUserServlet"})
-public class AddUserServlet extends HttpServlet{
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+@WebServlet(name="deleteUserServlet",urlPatterns="/deleteUserServlet")
+public class DeleteUserServlet extends HttpServlet{
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setCharacterEncoding("UTF-8");
         response.setContentType("text/jsp; charset=utf-8");
 
@@ -21,33 +20,32 @@ public class AddUserServlet extends HttpServlet{
         UserService userService = new UserService();
         JSONObject obean = new JSONObject();
         String message = "";
-        if ("add".equals(type)) {
+        if ("delete".equals(type)) {
             User user = new User();
             user.setUsername(request.getParameter("username"));
-            user.setPassword(request.getParameter("password"));
 
-            int ret = userService.addUser(user);
+            int ret = userService.delUser(user);
             if (ret > 0) {
-                message = "Success insert user";
-            }else {
-                message = "Error!";
+                message = "Delete user success!";
             }
+            else message = "Error!";
             obean.put("message", message);
         }
         if ("search".equals(type)) {
             User user = new User();
-            user.setUsername(request.getParameter("username"));
+            user.setUsername(request.getParameter("username_user_del"));
 
             boolean flag = userService.search(user);
             if (flag) {
-                obean.put("message", "true");
+                obean.put("valid", true);
             }else {
-                obean.put("message", "false");
+                obean.put("valid", false);
             }
         }
         response.getWriter().write(obean.toString());
     }
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        this.doPost(request, response);
+
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        this.doGet(request, response);
     }
 }
