@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="bean.Database" %>
 
 <html>
   <head>
@@ -30,6 +31,10 @@
       <script src="js/submit.js" type="text/javascript"></script>
   </head>
   <body>
+  <%
+    Database db = new Database();
+    application.setAttribute("database", db);
+  %>
   <div class="container">
       <center> <h4>向users表插入数据</h4></center>
       <br>
@@ -79,7 +84,7 @@
               <label for="age" class="col-sm-1 control-label">Age</label>
               <div class="col-sm-10">
                   <input type="text" class="form-control" id="age"
-                         name="age" placeholder="Please input age">
+                         name="age" placeholder="Please input age" default="10">
               </div>
           </div>
           <div class="form-group">
@@ -115,6 +120,9 @@
           </div>
       </form>
   </div>
+
+  <center><a href="queryServlet">查看数据库数据</a></center>
+
 
   </body>
 

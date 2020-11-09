@@ -1,9 +1,11 @@
 package servlet;
 
+import bean.Database;
 import bean.User;
 import com.alibaba.fastjson.JSONObject;
 import service.UserService;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -16,8 +18,10 @@ public class DeleteUserServlet extends HttpServlet{
         response.setCharacterEncoding("UTF-8");
         response.setContentType("text/jsp; charset=utf-8");
 
+        ServletContext sc = getServletConfig().getServletContext();
+        Database db = (Database)sc.getAttribute("database");
         String type = request.getParameter("types");
-        UserService userService = new UserService();
+        UserService userService = new UserService(db);
         JSONObject obean = new JSONObject();
         String message = "";
         if ("delete".equals(type)) {

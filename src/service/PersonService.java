@@ -5,9 +5,8 @@ import bean.Database;
 import bean.Person;
 import dao.PersonOpt;
 public class PersonService {
-    private Database db = new Database();
     private PersonOpt p;
-    public PersonService() {
+    public PersonService(Database db) {
         p = new PersonOpt(db);
     }
     public int addPerson(Person person) {

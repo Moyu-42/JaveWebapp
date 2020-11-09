@@ -6,11 +6,8 @@ import dao.UserOpt;
 import java.util.List;
 
 public class UserService {
-    private Database db = new Database();
     private UserOpt u;
-    public UserService() {
-        u = new UserOpt(db);
-    }
+    public UserService(Database db) { u = new UserOpt(db); }
     public int addUser(User user) {
         return u.insert(user);
     }
