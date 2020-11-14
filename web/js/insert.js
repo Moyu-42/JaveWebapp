@@ -1,136 +1,97 @@
-$(function check() {
-    jQuery("#form-users").bootstrapValidator({
-        live: 'submitted',//验证时机，enabled是内容有变化就验证（默认），disabled和submitted是提交再验证
-        excluded: [':disabled', ':hidden', ':not(:visible)'],//排除无需验证的控件，比如被禁用的或者被隐藏的
-        submitButtons: $('#btn-users'),
-        feedbackIcons: {//根据验证结果显示的各种图标
-            valid: 'glyphicon glyphicon-ok',
-            invalid: 'glyphicon glyphicon-remove',
-            validating: 'glyphicon glyphicon-refresh'
-        },
-        fields: {
+function user_check() {
+    return $('#form-users').validate({
+        rules: {
             username_user: {
-                validators: {
-                    notEmpty: {
-                        message: '请输入用户名'
-                    },
-                    stringLength: {
-                        min: 0,
-                        max: 10,
-                        message: '长度必须在10之内'
-                    }
-                }
+                required: true,
+                maxlength: 10
             },
             password: {
-                validators: {
-                    notEmpty: {
-                        message: '请输入密码'
-                    },
-                    stringLength: {
-                        min: 0,
-                        max: 8,
-                        message: '长度必须在8之内'
-                    }
-                }
+                required: true,
+                maxlength: 8
+            }
+        },
+        message: {
+            username_user: {
+                required: "请输入用户名",
+                maxlength: "最大长度为10"
+            },
+            password: {
+                required: "请输入密码",
+                maxlength: "最大长度为8"
             }
         }
-    });
-    jQuery("#form-person").bootstrapValidator({
-        live: 'submitted',//验证时机，enabled是内容有变化就验证（默认），disabled和submitted是提交再验证
-        excluded: [':disabled', ':hidden', ':not(:visible)'],//排除无需验证的控件，比如被禁用的或者被隐藏的
-        submitButtons: $('#btn-person'),//指定提交按钮，如果验证失败则变成disabled，但我没试成功，反而加了这句话非submit按钮也会提交到action指定页面
-        feedbackIcons: {//根据验证结果显示的各种图标
-            valid: 'glyphicon glyphicon-ok',
-            invalid: 'glyphicon glyphicon-remove',
-            validating: 'glyphicon glyphicon-refresh'
-        },
-        fields: {
+    })
+}
+function person_check() {
+    return $('#form-person').validate({
+        rules: {
             username_person: {
-                validators: {
-                    notEmpty: {
-                        message: '请输入用户名'
-                    },
-                    stringLength: {
-                        min: 0,
-                        max: 10,
-                        message: '长度必须在10之内'
-                    }
-                }
+                required: true,
+                maxlength: 10
             },
             name: {
-                validators: {
-                    notEmpty: {
-                        message: '请输入名字'
-                    },
-                    stringLength: {
-                        min: 0,
-                        max: 20,
-                        message: '长度必须在20之内'
-                    }
-                }
+                required: true,
+                maxlength: 20
             },
             age: {
-                validators: {
-                    digits: {
-                        message: '该值只能包含数字'
-                    },
-                    greaterThan: {
-                        value: 0,
-                        message: '年龄要大于0'
-                    },
-                    lessThan: {
-                        value: 800,
-                        message: '年龄要小于800'
-                    }
-                }
+                digits: true,
+                max: 800,
+                min: 0
             },
             teleno: {
-                validators: {
-                    digits: {
-                        message: '该值只能包含数字'
-                    },
-                    stringLength: {
-                        min: 11,
-                        max: 11,
-                        message: '长度必须为11位'
-                    }
-                }
+                digits: true,
+                maxlength: 11,
+                minlength: 11
             }
-        }
-    });
-    jQuery("#form-users-del").bootstrapValidator({
-        live: 'submitted',//验证时机，enabled是内容有变化就验证（默认），disabled和submitted是提交再验证
-        excluded: [':disabled', ':hidden', ':not(:visible)'],//排除无需验证的控件，比如被禁用的或者被隐藏的
-        submitButtons: $('#btn-users-del'),
-        feedbackIcons: {//根据验证结果显示的各种图标
-            valid: 'glyphicon glyphicon-ok',
-            invalid: 'glyphicon glyphicon-remove',
-            validating: 'glyphicon glyphicon-refresh'
         },
-        fields: {
+        message: {
+            username_person: {
+                required: "请输入用户名",
+                maxlength: "最大长度为10"
+            },
+            name: {
+                required: "请输入名称",
+                maxlength: "最大长度为20"
+            },
+            age: {
+                digits: "年龄只能为数字",
+                max: "不能超过800",
+                min: "不能低于0"
+            },
+            teleno: {
+                digits: "电话号码只能为数字",
+                maxlength: "长度只能为11位",
+                minlength: "长度只能为11位"
+            }
+        }
+    });
+}
+function del_check() {
+    return $('#form-users-del').validate({
+        rules: {
             username_user_del: {
-                validators: {
-                    notEmpty: {
-                        message: '请输入用户名'
+                required: true,
+                remote: {
+                    type: "POST",
+                    url: "deleteUserServlet",
+                    delay: 200,
+                    data: {
+                        types: "search",
+                        username: function () {
+                            return $('#username_user_del').val();
+                        }
                     },
-                    stringLength: {
-                        min: 0,
-                        max: 10,
-                        message: '长度必须在10之内'
-                    },
-                    remote: {
-                        url: 'deleteUserServlet',
-                        type: "post",
-                        message: "该Username不存在",
-                        delay: 200,
-                        data: {
-                            types: "search",
-                            username: $("input[name=username_user_del]").val()
-                        },
-                        dataType: "json"
+                    dataType: "JSON",
+                    dataFilter: function (data, type) {
+                        if (data == "true") {
+                            return true;
+                        }else return false;
                     }
                 }
             }
         }
     });
-});
+}
+$(user_check());
+$(person_check());
+$(del_check());

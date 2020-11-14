@@ -34,6 +34,7 @@ public class DeleteUserServlet extends HttpServlet{
             }
             else message = "Error!";
             obean.put("message", message);
+            response.getWriter().write(obean.toString());
         }
         if ("search".equals(type)) {
             User user = new User();
@@ -41,12 +42,11 @@ public class DeleteUserServlet extends HttpServlet{
 
             boolean flag = userService.search(user);
             if (flag) {
-                obean.put("valid", true);
+                response.getWriter().write("true");
             }else {
-                obean.put("valid", false);
+                response.getWriter().write("false");
             }
         }
-        response.getWriter().write(obean.toString());
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
