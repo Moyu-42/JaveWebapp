@@ -2,6 +2,7 @@ $(function add() {
     jQuery("#btn-person").on('click',function (event) {
         $('#form-person').bootstrapValidator(); //验证配置
         var validator = $('#form-person').data("bootstrapValidator"); //获取validator对象
+        validator.validate();
         if (validator.isValid()) {
             var flag = new Boolean();
             flag = true;
@@ -41,6 +42,10 @@ $(function add() {
                     });
                 }
             })
+            return false;
+        }
+        else {
+            alert("不合法!");
             return false;
         }
     });
@@ -84,6 +89,10 @@ $(function add() {
                     });
                 }
             })
+            return false;
+        }
+        else {
+            alert("不合法!");
             return false;
         }
     });
