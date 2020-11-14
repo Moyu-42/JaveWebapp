@@ -39,10 +39,6 @@ $(function opt() {
             })
             return false;
         }
-        else {
-            alert("不合法!");
-            return false;
-        }
     });
     jQuery("#btn-person").on('click',function (event) {
         if (person_check().form()) {
@@ -84,10 +80,6 @@ $(function opt() {
                     });
                 }
             })
-            return false;
-        }
-        else {
-            alert("不合法!");
             return false;
         }
     });

@@ -1,5 +1,7 @@
 function user_check() {
     return $('#form-users').validate({
+        errorElement : 'span',
+        errorClass : 'help-block',
         rules: {
             username_user: {
                 required: true,
@@ -10,7 +12,7 @@ function user_check() {
                 maxlength: 8
             }
         },
-        message: {
+        messages: {
             username_user: {
                 required: "请输入用户名",
                 maxlength: "最大长度为10"
@@ -19,11 +21,31 @@ function user_check() {
                 required: "请输入密码",
                 maxlength: "最大长度为8"
             }
-        }
+        },
+        //自定义错误消息放到哪里
+        errorPlacement : function(error, element) {
+            element.next().remove();//删除显示图标
+            element.after('<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>');
+            element.closest('.form-group').append(error);//显示错误消息提示
+        },
+        //给未通过验证的元素进行处理
+        highlight : function(element) {
+            $(element).closest('.form-group').addClass('has-error has-feedback');
+        },
+        //验证通过的处理
+        success : function(label) {
+            var el=label.closest('.form-group').find("input");
+            el.next().remove();//与errorPlacement相似
+            el.after('<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>');
+            label.closest('.form-group').removeClass('has-error').addClass("has-feedback has-success");
+            label.remove();
+        },
     })
 }
 function person_check() {
     return $('#form-person').validate({
+        errorElement : 'span',
+        errorClass : 'help-block',
         rules: {
             username_person: {
                 required: true,
@@ -44,7 +66,7 @@ function person_check() {
                 minlength: 11
             }
         },
-        message: {
+        messages: {
             username_person: {
                 required: "请输入用户名",
                 maxlength: "最大长度为10"
@@ -63,12 +85,30 @@ function person_check() {
                 maxlength: "长度只能为11位",
                 minlength: "长度只能为11位"
             }
-        }
+        },
+        //自定义错误消息放到哪里
+        errorPlacement : function(error, element) {
+            element.next().remove();//删除显示图标
+            element.after('<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>');
+            element.closest('.form-group').append(error);//显示错误消息提示
+        },
+        //给未通过验证的元素进行处理
+        highlight : function(element) {
+            $(element).closest('.form-group').addClass('has-error has-feedback');
+        },
+        //验证通过的处理
+        success : function(label) {
+            var el=label.closest('.form-group').find("input");
+            el.next().remove();//与errorPlacement相似
+            el.after('<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>');
+            label.closest('.form-group').removeClass('has-error').addClass("has-feedback has-success");
+            label.remove();
+        },
     });
 }
 $(function del_check() {
     jQuery("#form-users-del").bootstrapValidator({
-        live: 'submitted',//验证时机，enabled是内容有变化就验证（默认），disabled和submitted是提交再验证
+        live: 'enabled',//验证时机，enabled是内容有变化就验证（默认），disabled和submitted是提交再验证
         excluded: [':disabled', ':hidden', ':not(:visible)'],//排除无需验证的控件，比如被禁用的或者被隐藏的
         submitButtons: $('#btn-users-del'),
         feedbackIcons: {//根据验证结果显示的各种图标
@@ -91,7 +131,7 @@ $(function del_check() {
                         url: 'deleteUserServlet',
                         type: "post",
                         message: "该Username不存在",
-                        delay: 200,
+                        delay: 1000,
                         data: {
                             types: "search",
                             username: $("input[name=username_user_del]").val()
