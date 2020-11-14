@@ -66,32 +66,42 @@ function person_check() {
         }
     });
 }
-function del_check() {
-    return $('#form-users-del').validate({
-        rules: {
+$(function del_check() {
+    jQuery("#form-users-del").bootstrapValidator({
+        live: 'submitted',//验证时机，enabled是内容有变化就验证（默认），disabled和submitted是提交再验证
+        excluded: [':disabled', ':hidden', ':not(:visible)'],//排除无需验证的控件，比如被禁用的或者被隐藏的
+        submitButtons: $('#btn-users-del'),
+        feedbackIcons: {//根据验证结果显示的各种图标
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
             username_user_del: {
-                required: true,
-                remote: {
-                    type: "POST",
-                    url: "deleteUserServlet",
-                    delay: 200,
-                    data: {
-                        types: "search",
-                        username: function () {
-                            return $('#username_user_del').val();
-                        }
+                validators: {
+                    notEmpty: {
+                        message: '请输入用户名'
                     },
-                    dataType: "JSON",
-                    dataFilter: function (data, type) {
-                        if (data == "true") {
-                            return true;
-                        }else return false;
+                    stringLength: {
+                        min: 0,
+                        max: 10,
+                        message: '长度必须在10之内'
+                    },
+                    remote: {
+                        url: 'deleteUserServlet',
+                        type: "post",
+                        message: "该Username不存在",
+                        delay: 200,
+                        data: {
+                            types: "search",
+                            username: $("input[name=username_user_del]").val()
+                        },
+                        dataType: "json"
                     }
                 }
             }
         }
     });
-}
+});
 $(user_check());
 $(person_check());
-$(del_check());

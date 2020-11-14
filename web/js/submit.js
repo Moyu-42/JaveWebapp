@@ -92,7 +92,9 @@ $(function opt() {
         }
     });
     jQuery("#btn-users-del").on('click', function () {
-        if (del_check().form()) {
+        $('#form-users-del').bootstrapValidator(); //验证配置
+        var validator = $('#form-users-del').data("bootstrapValidator"); //获取validator对象
+        if (validator.isValid()) {
             if (confirm("请确定要删除")) {
                 jQuery.ajax({
                     type: "post",
