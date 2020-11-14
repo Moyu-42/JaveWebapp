@@ -43,6 +43,10 @@ $(function add() {
             })
             return false;
         }
+        else {
+            alert("不合法!");
+            return false;
+        }
     });
     jQuery("#btn-users").on('click',function (event) {
         $('#form-users').bootstrapValidator(); //验证配置
@@ -84,6 +88,10 @@ $(function add() {
                     });
                 }
             })
+            return false;
+        }
+        else {
+            alert("不合法!");
             return false;
         }
     });

@@ -8,6 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
 <%@ page import="bean.Database" %>
+<%@ page import="javax.servlet.*" %>
 <html>
 <head>
     <head>
@@ -69,5 +70,10 @@
         </div>
     </form>
     <center><a href="index.jsp">返回数据库操作页面</a></center>
+<%
+    ServletContext sc = getServletConfig().getServletContext();
+    Database db = (Database)sc.getAttribute("database");
+    db.close();
+%>
 </body>
 </html>

@@ -1,6 +1,6 @@
 $(function check() {
     jQuery("#form-users").bootstrapValidator({
-        live: 'enabled',//验证时机，enabled是内容有变化就验证（默认），disabled和submitted是提交再验证
+        live: 'submitted',//验证时机，enabled是内容有变化就验证（默认），disabled和submitted是提交再验证
         excluded: [':disabled', ':hidden', ':not(:visible)'],//排除无需验证的控件，比如被禁用的或者被隐藏的
         submitButtons: $('#btn-users'),
         feedbackIcons: {//根据验证结果显示的各种图标
@@ -36,7 +36,7 @@ $(function check() {
         }
     });
     jQuery("#form-person").bootstrapValidator({
-        live: 'enabled',//验证时机，enabled是内容有变化就验证（默认），disabled和submitted是提交再验证
+        live: 'submitted',//验证时机，enabled是内容有变化就验证（默认），disabled和submitted是提交再验证
         excluded: [':disabled', ':hidden', ':not(:visible)'],//排除无需验证的控件，比如被禁用的或者被隐藏的
         submitButtons: $('#btn-person'),//指定提交按钮，如果验证失败则变成disabled，但我没试成功，反而加了这句话非submit按钮也会提交到action指定页面
         feedbackIcons: {//根据验证结果显示的各种图标
@@ -99,7 +99,7 @@ $(function check() {
         }
     });
     jQuery("#form-users-del").bootstrapValidator({
-        live: 'enabled',//验证时机，enabled是内容有变化就验证（默认），disabled和submitted是提交再验证
+        live: 'submitted',//验证时机，enabled是内容有变化就验证（默认），disabled和submitted是提交再验证
         excluded: [':disabled', ':hidden', ':not(:visible)'],//排除无需验证的控件，比如被禁用的或者被隐藏的
         submitButtons: $('#btn-users-del'),
         feedbackIcons: {//根据验证结果显示的各种图标
@@ -122,7 +122,7 @@ $(function check() {
                         url: 'deleteUserServlet',
                         type: "post",
                         message: "该Username不存在",
-                        delay: 1000,
+                        delay: 200,
                         data: {
                             types: "search",
                             username: $("input[name=username_user_del]").val()
