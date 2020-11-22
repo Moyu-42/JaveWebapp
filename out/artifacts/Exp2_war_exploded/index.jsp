@@ -34,7 +34,7 @@
 <body>
 <%
     Database db = new Database();
-    application.setAttribute("database", db);
+    session.setAttribute("database", db);
 %>
 <div class="container">
     <center> <h4>向users表插入数据</h4></center>

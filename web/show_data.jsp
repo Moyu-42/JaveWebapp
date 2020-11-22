@@ -70,10 +70,5 @@
         </div>
     </form>
     <center><a href="index.jsp">返回数据库操作页面</a></center>
-<%
-    ServletContext sc = getServletConfig().getServletContext();
-    Database db = (Database)sc.getAttribute("database");
-    db.close();
-%>
 </body>
 </html>

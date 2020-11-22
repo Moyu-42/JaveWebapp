@@ -13,6 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 @WebServlet(name = "addPersonServlet", urlPatterns = {"/addPersonServlet"})
 public class AddPersonServlet extends HttpServlet{
@@ -20,7 +21,7 @@ public class AddPersonServlet extends HttpServlet{
         response.setCharacterEncoding("UTF-8");
         response.setContentType("text/jsp; charset=utf-8");
 
-        ServletContext sc = getServletConfig().getServletContext();
+        HttpSession sc = request.getSession();
         Database db = (Database)sc.getAttribute("database");
         String type = request.getParameter("types");
         PersonService personService = new PersonService(db);
@@ -49,7 +50,7 @@ public class AddPersonServlet extends HttpServlet{
         }
         if ("search".equals(type)) {
             Person person = new Person();
-            person.setUsername(request.getParameter("username"));
+            person.setUsername(request.getParameter("name"));
 
             Boolean flag = personService.search(person);
             if (flag) {
