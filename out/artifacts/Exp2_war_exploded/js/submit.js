@@ -46,24 +46,36 @@ $(function opt() {
     });
     jQuery("#btn-person").on('click',function (event) {
         if (person_check().form()) {
-            var flag = new Boolean();
-            flag = true;
+            var flag_conf = new Boolean(), flag = new Boolean();
+            flag_conf = true, flag = true;
             $.when(jQuery.ajax({
                 type: "post",
                 url: "addPersonServlet",
                 data: {
                     types: "search",
-                    username: $('#username_person').val()
+                    username: $('#username_person').val(),
+                    name: $('#name').val()
                 },
                 async: "false",
                 dataType: "json",
                 success: function (data) {
-                    if (data.message == "true") {
-                        flag = confirm("该用户名已存在，再次提交会进行修改");
+                    if (data.message == "Name_exist") {
+                        flag = false;
+                        flag_conf = false;
+                        alert("该Name已存在！不能插入");
+                    }
+                    else {
+                        if (data.message == "Username_exist") {
+                            flag = false;
+                            flag_conf = confirm("该用户名已存在，再次提交会进行修改");
+                        }
                     }
                 }
             })).done(function (){
                 if (flag) {
+                    flag_conf = confirm("确定要插入?");
+                }
+                if (flag_conf) {
                     jQuery.ajax({
                         type: "post",
                         url: "addPersonServlet",

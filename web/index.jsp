@@ -7,6 +7,7 @@
         --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="bean.Database" %>
+<%@ page import="java.util.*" %>
 
 <html>
 <head>
@@ -33,8 +34,14 @@
 </head>
 <body>
 <%
-    Database db = new Database();
-    session.setAttribute("database", db);
+    if (session.getAttribute("database") == null) {
+        Database db = new Database();
+        session.setAttribute("database", db);
+    }
+    if (session.getAttribute("list") == null) {
+        List<String> l = new ArrayList<String>();
+        session.setAttribute("list", l);
+    }
 %>
 <div class="container">
     <center> <h4>向users表插入数据</h4></center>
@@ -126,7 +133,7 @@
 </div>
 
 <center><a href="queryServlet">查看数据库数据</a></center>
-
+<center><a href="./result.jsp">查看本次操作</a></center>
 
 </body>
 

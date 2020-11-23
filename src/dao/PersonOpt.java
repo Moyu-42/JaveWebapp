@@ -75,10 +75,17 @@ public class PersonOpt {
         db.getLog(8);
         return ans;
     }
-    public boolean search(Person p) {
-        String sql = "select * from person where Username = ?";
+    public boolean search(Person p, int opt) {
+        String sql = null;
         List<Map<String, Object>> pList = new ArrayList<>();
-        pList = db.query(sql, p.getUsername());
+        if (opt == 1) {
+            sql = "select * from person where Username = ?";
+            pList = db.query(sql, p.getUsername());
+        }
+        else {
+            sql = "select * from person where Name = ?";
+            pList = db.query(sql, p.getName());
+        }
         db.getLog(8);
         if (pList.isEmpty()) return false;
         else return true;

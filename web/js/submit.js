@@ -53,14 +53,22 @@ $(function opt() {
                 url: "addPersonServlet",
                 data: {
                     types: "search",
+                    username: $('#username_person').val(),
                     name: $('#name').val()
                 },
                 async: "false",
                 dataType: "json",
                 success: function (data) {
-                    if (data.message == "true") {
+                    if (data.message == "Name_exist") {
                         flag = false;
-                        flag_conf = confirm("该用户名已存在，再次提交会进行修改");
+                        flag_conf = false;
+                        alert("该Name已存在！不能插入");
+                    }
+                    else {
+                        if (data.message == "Username_exist") {
+                            flag = false;
+                            flag_conf = confirm("该用户名已存在，再次提交会进行修改");
+                        }
                     }
                 }
             })).done(function (){
