@@ -11,14 +11,17 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.List;
+
 @WebServlet(name="deleteUserServlet",urlPatterns="/deleteUserServlet")
 public class DeleteUserServlet extends HttpServlet{
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setCharacterEncoding("UTF-8");
         response.setContentType("text/jsp; charset=utf-8");
 
-        ServletContext sc = getServletConfig().getServletContext();
+        HttpSession sc = request.getSession();
         Database db = (Database)sc.getAttribute("database");
         String type = request.getParameter("types");
         UserService userService = new UserService(db);
@@ -30,7 +33,11 @@ public class DeleteUserServlet extends HttpServlet{
 
             int ret = userService.delUser(user);
             if (ret > 0) {
-                message = "Delete user success!";
+                String show = "131" + user.getUsername();
+                message = "成功从user删除 " + user.getUsername();
+                List<String> l = (List)sc.getAttribute("list");
+                l.add(show);
+                sc.setAttribute("list", l);
             }
             else message = "Error!";
             obean.put("message", message);

@@ -8,6 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
 <%@ page import="bean.Database" %>
+<%@ page import="javax.servlet.*" %>
 <html>
 <head>
     <head>

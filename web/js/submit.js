@@ -1,35 +1,35 @@
-$(function add() {
-    jQuery("#btn-person").on('click',function (event) {
-        $('#form-person').bootstrapValidator(); //验证配置
-        var validator = $('#form-person').data("bootstrapValidator"); //获取validator对象
-        if (validator.isValid()) {
-            var flag = new Boolean();
-            flag = true;
-            $.when(jQuery.ajax({
+$(function opt() {
+    jQuery("#btn-users").on('click',function (event) {
+        if (user_check().form()) {
+            var flag_conf = new Boolean(), flag = new Boolean();
+            flag_conf = true, flag = true;
+            jQuery.when(jQuery.ajax({
                 type: "post",
-                url: "addPersonServlet",
+                url: "addUserServlet",
                 data: {
                     types: "search",
-                    username: $('#username_person').val()
+                    username: $('#username_user').val()
                 },
                 async: "false",
                 dataType: "json",
                 success: function (data) {
                     if (data.message == "true") {
-                        flag = confirm("该用户名已存在，再次提交会进行修改");
+                        flag = false;
+                        flag_conf = confirm("该用户名已存在，再次提交会进行修改");
                     }
                 }
             })).done(function (){
                 if (flag) {
+                    flag_conf = confirm("确定要插入?");
+                }
+                if (flag_conf) {
                     jQuery.ajax({
                         type: "post",
-                        url: "addPersonServlet",
+                        url: "addUserServlet",
                         data: {
                             types: "add",
-                            username: $('#username_person').val(),
-                            name: $('#name').val(),
-                            age: $('#age').val(),
-                            teleno: $('#teleno').val()
+                            username: $('#username_user').val(),
+                            password: $('#password').val(),
                         },
                         dataType: "json",
                         success: function (data) {
@@ -44,35 +44,47 @@ $(function add() {
             return false;
         }
     });
-    jQuery("#btn-users").on('click',function (event) {
-        $('#form-users').bootstrapValidator(); //验证配置
-        var validator = $('#form-users').data("bootstrapValidator"); //获取validator对象
-        if (validator.isValid()) {
-            var flag = new Boolean();
-            flag = true;
-            jQuery.when(jQuery.ajax({
+    jQuery("#btn-person").on('click',function (event) {
+        if (person_check().form()) {
+            var flag_conf = new Boolean(), flag = new Boolean();
+            flag_conf = true, flag = true;
+            $.when(jQuery.ajax({
                 type: "post",
-                url: "addUserServlet",
+                url: "addPersonServlet",
                 data: {
                     types: "search",
-                    username: $('#username_user').val()
+                    username: $('#username_person').val(),
+                    name: $('#name').val()
                 },
                 async: "false",
                 dataType: "json",
                 success: function (data) {
-                    if (data.message == "true") {
-                        flag = confirm("该用户名已存在，再次提交会进行修改");
+                    if (data.message == "Name_exist") {
+                        flag = false;
+                        flag_conf = false;
+                        alert("该Name已存在！不能插入");
+                    }
+                    else {
+                        if (data.message == "Username_exist") {
+                            flag = false;
+                            flag_conf = confirm("该用户名已存在，再次提交会进行修改");
+                        }
                     }
                 }
             })).done(function (){
                 if (flag) {
+                    flag_conf = confirm("确定要插入?");
+                }
+                if (flag_conf) {
                     jQuery.ajax({
                         type: "post",
-                        url: "addUserServlet",
+                        url: "addPersonServlet",
                         data: {
                             types: "add",
-                            username: $('#username_user').val(),
-                            password: $('#password').val(),
+                            username: $('#username_person').val(),
+                            name: $('#name').val(),
+                            age: $('#age').val(),
+                            teleno: $('#teleno').val()
                         },
                         dataType: "json",
                         success: function (data) {

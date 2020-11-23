@@ -3,75 +3,47 @@ import java.util.*;
 import java.util.Date;
 import java.text.*;
 import java.io.*;
+
+import com.alibaba.druid.pool.DruidDataSourceFactory;
 import com.alibaba.fastjson.*;
+
+import javax.sql.DataSource;
 import java.net.URISyntaxException;
 import java.sql.*;
 
 public class Database {
-    private String JDBC_DRIVER = "com.mysql.jdbc.Driver";
+/*    private String JDBC_DRIVER = "com.mysql.jdbc.Driver";
     private String URL = "jdbc:mysql://:/?useUnicode=true&characterEncoding=utf8&useSSL=false&nullCatalogMeansCurrent=true&serverTimezone=UTC";
     private String IPAddress;
     private String PORT;
     private String DatabaseName;
     private String USER;
-    private String PASSWORD;
+    private String PASSWORD;*/
     private Connection conn = null;
     private PreparedStatement pstmt = null;
     private FileWriter fw = null;
 
-    private void GetSettings() {
-        String s = "";
-        try {
-            String path = "/settings.json";
-            File file = new File(".");
-            try {
-                file = new File(Database.class.getResource(path).toURI());
-            } catch (URISyntaxException e) {
-                e.printStackTrace();
-            }
-            FileReader reader = new FileReader(file);
-            Reader rr = new InputStreamReader(new FileInputStream(file), "utf-8");
-            StringBuffer buf = new StringBuffer();
-            int ch = 0;
-            while ((ch = rr.read()) != -1) {
-                buf.append((char) ch);
-            }
-            reader.close();
-            rr.close();
-            s = buf.toString();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        JSONObject jo = JSON.parseObject(s);
-        IPAddress = jo.getString("IPAddress");
-        PORT = jo.getString("PORT");
-        USER = jo.getString("USER");
-        PASSWORD = jo.getString("PASSWORD");
-        DatabaseName = jo.getString("DatabaseName");
-        Integer index_IP, index_Port, index_databasename;
-        StringBuilder strbu = new StringBuilder(URL);
-        index_IP = strbu.indexOf(":/?");
-        strbu.insert(index_IP, IPAddress);
-        index_Port = strbu.indexOf("/?");
-        strbu.insert(index_Port, PORT);
-        index_databasename = strbu.indexOf("?");
-        strbu.insert(index_databasename, DatabaseName);
-        URL = strbu.toString();
-    }
-
     public Database() {
-        GetSettings();
+        Properties properties = new Properties();
+        InputStream is = Database.class.getResourceAsStream("/druid.properties");
+        DataSource dataSource = null;
         try {
             fw = new FileWriter("./log", false);
             fw.write("");
             fw.close();
+            properties.load(is);
         }
         catch (IOException e) {
             e.printStackTrace();
         }
         try {
-            Class.forName(JDBC_DRIVER);
-            conn = DriverManager.getConnection(URL, USER, PASSWORD);
+            dataSource = DruidDataSourceFactory.createDataSource(properties);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            conn = dataSource.getConnection();
         } catch (Exception e) {
             e.printStackTrace();
         }

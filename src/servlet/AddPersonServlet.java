@@ -13,20 +13,32 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.List;
+
 @WebServlet(name = "addPersonServlet", urlPatterns = {"/addPersonServlet"})
 public class AddPersonServlet extends HttpServlet{
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setCharacterEncoding("UTF-8");
         response.setContentType("text/jsp; charset=utf-8");
 
-        ServletContext sc = getServletConfig().getServletContext();
+        HttpSession sc = request.getSession();
         Database db = (Database)sc.getAttribute("database");
         String type = request.getParameter("types");
         PersonService personService = new PersonService(db);
         JSONObject obean = new JSONObject();
         String message = "";
         if ("add".equals(type)) {
+            List<String> l = (List)sc.getAttribute("list");
+            String show = l.get(l.size() - 1);
+            l.remove(l.size() - 1);
+            StringBuilder sb = new StringBuilder(show);
+            sb.replace(2, 3, "1");
+            show = sb.toString();
+            l.add(show);
+            sc.setAttribute("list", l);
+
             Person person = new Person();
             person.setUsername(request.getParameter("username"));
             person.setName(request.getParameter("name"));
@@ -41,21 +53,38 @@ public class AddPersonServlet extends HttpServlet{
 
             int ret = personService.addPerson(person);
             if (ret > 0) {
-                message = "Success insert person";
+                message = "成功插入person " + person.getUsername();
             }else {
                 message = "Error!";
             }
             obean.put("message", message);
         }
         if ("search".equals(type)) {
-            Person person = new Person();
-            person.setUsername(request.getParameter("username"));
+            String show = "2";
 
-            Boolean flag = personService.search(person);
-            if (flag) {
-                obean.put("message", "true");
+            Person person = new Person();
+            person.setName(request.getParameter("name"));
+            person.setUsername(request.getParameter("username"));
+            Boolean flag = personService.search(person, 0);
+            Boolean flag1 = personService.search(person, 1);
+            if (flag && !flag1) {
+                show += "10";
+                obean.put("message", "Name_exist");
             }
-            else obean.put("message", "false");
+            else {
+                if (flag1) {
+                    show += "20";
+                    obean.put("message", "Username_exist");
+                }
+                else {
+                    show += "10";
+                    obean.put("message", "false");
+                }
+            }
+            List<String> l = (List)sc.getAttribute("list");
+            show += person.getUsername();
+            l.add(show);
+            sc.setAttribute("list", l);
         }
         response.getWriter().write(obean.toString());
     }

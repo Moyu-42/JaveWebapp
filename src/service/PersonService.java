@@ -15,5 +15,5 @@ public class PersonService {
     public List<Person> getQuery() {
         return p.query();
     }
-    public boolean search(Person person) { return p.search(person); }
+    public boolean search(Person person, int opt) { return p.search(person, opt); }
 }
