@@ -71,5 +71,6 @@
     </c:forEach>
 </table>
 <center><a href="index.jsp">返回数据库操作页面</a></center>
+<center><a href="queryServlet">查看数据库数据</a></center>
 </body>
 </html>

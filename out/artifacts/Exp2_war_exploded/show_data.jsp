@@ -70,5 +70,6 @@
         </div>
     </form>
     <center><a href="index.jsp">返回数据库操作页面</a></center>
+    <center><a href="./result.jsp">查看本次操作</a></center>
 </body>
 </html>
