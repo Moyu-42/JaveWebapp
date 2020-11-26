@@ -5,6 +5,7 @@ Java webapp
 
 upd 11/25：
 由于验收完了拿了A+，所以有空就更一下我是怎么做实验的
+
 (主要给明年的我看看现在的我是有多废物
 
 ### 环境
@@ -25,13 +26,13 @@ Apache Tomcat/9.0.39
 
 ```
 ├─out
-│  └─artifacts						// 这部分为编译生成的文件，可以直接部署
-│      ├─Exp2						// 打好的war包，建议不用
-│      └─Exp2_war_exploded			// 最后部署的项目
+│  └─artifacts              // 这部分为编译生成的文件，可以直接部署
+│      ├─Exp2              // 打好的war包，建议不用
+│      └─Exp2_war_exploded              // 最后部署的项目
 │          │  index.jsp
 │          │  result.jsp
 │          │  show_data.jsp
-│          ├─js						// js脚本
+│          ├─js              // js脚本
 │          │      insert.js
 │          │      submit.js
 │          └─WEB-INF				// 项目
