@@ -26,13 +26,13 @@ Apache Tomcat/9.0.39
 
 ```
 ├─out
-│  └─artifacts              // 这部分为编译生成的文件，可以直接部署
-│      ├─Exp2              // 打好的war包，建议不用
-│      └─Exp2_war_exploded              // 最后部署的项目
+│  └─artifacts                      // 这部分为编译生成的文件，可以直接部署
+│      ├─Exp2                       // 打好的war包，建议不用
+│      └─Exp2_war_exploded          // 最后部署的项目
 │          │  index.jsp
 │          │  result.jsp
 │          │  show_data.jsp
-│          ├─js              // js脚本
+│          ├─js                     // js脚本
 │          │      insert.js
 │          │      submit.js
 │          └─WEB-INF				// 项目
