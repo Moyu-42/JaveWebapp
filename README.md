@@ -123,7 +123,7 @@ Apache Tomcat/9.0.39
 
 可能遇到的问题1：
 
-到了提交的阶段，就是把数据从前端传到了后端的servlet，在这里我遇到的主要的问题，就是如何配置servlet。我所找到的有两种方法：1.在`/web/WEB-INF/web.xml`里进行配置；2.直接在`/src/*Servlet.java`里class声明之前使用@WebServlet(name = "`ServletName`", urlPatterns = {"`/ServletPath`"})，比如`name = "addPersonServlet", urlPatterns = {"/addPersonServlet"}`，以上配置之后，就可以在ajax的url中写入相应的`ServletPath`，比如某个ajax想发送到addPersonServlet，使用`url: addPersonServlet`即可完成。
+到了提交的阶段，就是把数据从前端传到了后端的servlet，在这里我遇到的主要的问题，就是如何配置servlet。我所找到的有两种方法：1.在`/web/WEB-INF/web.xml`里进行配置；2.直接在`/src/*Servlet.java`里class声明之前使用@WebServlet(name = "`ServletName`", urlPatterns = {"`/ServletPath`"})，比如`name = "addPersonServlet", urlPatterns = {"/addPersonServlet"}`。我使用的是方法2，以上配置之后，就可以在ajax的url中写入相应的`ServletPath`，比如某个ajax想发送到addPersonServlet，使用`url: addPersonServlet`即可完成。
 
 这部分要是存在问题的话，可以在后端的servlet中打上断点，在前端页面进行调试，看是不是成功跳转了，跳转成功进入后端的断点，则表示url配置没问题，否则会在前端调试窗口反馈出相关的错误信息，这时根据相关的信息再查找资料进行修改即可。
 
