@@ -55,40 +55,40 @@ Apache Tomcat/9.0.39
 │          ├─js                     // js脚本
 │          │      insert.js
 │          │      submit.js
-│          └─WEB-INF				// 项目
+│          └─WEB-INF                // 项目
 │              │  web.xml
-│              ├─classes			// 后端的class文件
+│              ├─classes            // 后端的class文件
 │              │  ├─bean
 │              │  ├─dao
 │              │  ├─service
 │              │  └─servlet
-│              └─lib				// 依赖
-├─src								// 源文件 .java对应的文件 带*为需要写的部分 不带*为exp1的代码
-│  ├─bean							// 基本单元
+│              └─lib                // 依赖
+├─src                               // 源文件 .java对应的文件 带*为需要写的部分 不带*为exp1的代码
+│  ├─bean                           // 基本单元
 │  │      Database.java
 │  │      Person.java
 │  │      User.java
-│  ├─dao							// dao层
+│  ├─dao                            // dao层
 │  │      PersonOpt.java
 │  │      UserOpt.java
-│  ├─service						// 封装的接口
+│  ├─service                        // 封装的接口
 │  │      PersonService.java
 │  │      UserService.java
-│  └─servlet						// servlet
-│          AddPersonServlet.java	// 处理person表单的提交
-│          AddUserServlet.java		// 处理user表单的提交
-│          DeleteUserServlet.java	// 处理删除操作
-│          QueryServlet.java		// 处理查看数据库数据的操作
-└─web								// JSP前端页面
-    │  index.jsp					// 主页面
-    │  result.jsp					// 查看进行的操作
-    │  show_data.jsp				// 查看数据库数据
-    ├─js							// js脚本 前端 需要写
-    │      insert.js				// 表单校验
-    │      submit.js				// 点击submit提交交互部分
+│  └─servlet                        // servlet
+│          AddPersonServlet.java    // 处理person表单的提交
+│          AddUserServlet.java      // 处理user表单的提交
+│          DeleteUserServlet.java   // 处理删除操作
+│          QueryServlet.java        // 处理查看数据库数据的操作
+└─web                               // JSP前端页面
+    │  index.jsp                    // 主页面
+    │  result.jsp                   // 查看进行的操作
+    │  show_data.jsp                // 查看数据库数据
+    ├─js                            // js脚本 前端 需要写
+    │      insert.js                // 表单校验
+    │      submit.js                // 点击submit提交交互部分
     └─WEB-INF
-        │  web.xml					// 在用servlet的时候你可能会去配置他，不过我没有这样写（见后文）
-        ├─classes					// .java文件编译生成的.class
+        │  web.xml                  // 在用servlet的时候你可能会去配置他，不过我没有这样写（见后文）
+        ├─classes                   // .java文件编译生成的.class
         │  ├─bean
         │  │      Database.class
         │  │      Person.class
@@ -104,7 +104,7 @@ Apache Tomcat/9.0.39
         │          AddUserServlet.class
         │          DeleteUserServlet.class
         │          QueryServlet.class
-        └─lib						// jar包依赖（有能力建议使用maven）
+        └─lib                       // jar包依赖（有能力建议使用maven）
 ```
 
 ### 关于我的思路
